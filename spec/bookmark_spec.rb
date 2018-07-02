@@ -1,10 +1,12 @@
 require 'bookmark'
 
 describe Bookmark do
-  subject(:bookmark) { described_class.new }
-  describe "#initialize" do
-    it "initialize with an array" do
-      expect(bookmark.array).to eq ["www.google.com", "www.amazon.com", "www.makers.com"]
+  describe ".all" do
+    it "returns all bookmarks" do
+      bookmarks = Bookmark.all
+      expect(bookmarks).to include ("www.google.com")
+      expect(bookmarks).to include ("www.amazon.com")
+      expect(bookmarks).to include ("www.makers.com")
     end
   end
 end
