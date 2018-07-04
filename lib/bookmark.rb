@@ -21,19 +21,19 @@ class Bookmark
     # This SQL query returns an array of hashes and assigns it to result
 
     result.map do |row|
-      row['url']
+      row['title']
     end
 
   end
 
-  def self.create(url)
+  def self.create(title, url)
     if ENV['ENVIRONMENT'] == 'test'
       connection = PG.connect(dbname: "bookmark_manager_test")
     else
       connection = PG.connect(dbname: "bookmark_manager")
     end
     return false unless valid_url?(url)
-    connection.exec("INSERT INTO bookmarks (url) VALUES('#{url}')")
+    connection.exec("INSERT INTO bookmarks (url,title) VALUES('#{url}','#{title}')")
   end
 
   private
