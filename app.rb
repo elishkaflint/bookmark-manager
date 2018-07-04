@@ -1,7 +1,11 @@
 require 'sinatra/base'
+require 'sinatra/flash'
+
 require_relative './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
+  enable :sessions
+  register Sinatra::Flash
 
   configure do
     # allows sinatra to find my CSS stylesheet
@@ -15,13 +19,18 @@ class BookmarkManager < Sinatra::Base
     erb :index
   end
 
+  get '/bookmarks/new' do
+    erb :new_bookmark
+  end
+
   post '/bookmarks' do
-    Bookmark.create(params[:add_url])
+    flash[:notice] = "Invalid URL" unless Bookmark.create(params[:add_url])
     redirect '/bookmarks'
   end
 
-  get '/bookmarks/new' do
-    erb :new_bookmark
+
+  get '/test_flash' do
+    erb :test_flash
   end
 
   # check what this is

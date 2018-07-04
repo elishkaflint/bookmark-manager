@@ -9,7 +9,6 @@ gem 'rspec'
 gem 'capybara'
 gem 'rubocop'
 gem 'pg'
-
-
+gem 'sinatra-flash'
 
 # gem "rails"

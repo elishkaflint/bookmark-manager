@@ -1,5 +1,8 @@
 require 'pg'
 # lets you use sql in ruby code
+require 'uri'
+require 'sinatra/flash'
+
 
 class Bookmark
 
@@ -27,9 +30,14 @@ class Bookmark
     else
       connection = PG.connect(dbname: "bookmark_manager")
     end
-
-    result = connection.exec("INSERT INTO bookmarks (url) VALUES('#{url}')")
+    return false unless valid_url?(url)
+    connection.exec("INSERT INTO bookmarks (url) VALUES('#{url}')")
   end
 
+  private
+
+  def self.valid_url?(url)
+    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+  end
 
 end

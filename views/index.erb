@@ -5,6 +5,8 @@
     <% end %>
   </ul>
 
+  <h1><%=flash[:notice]%></h1>
+
   <form action="/bookmarks/new" method='get'>
     <input type="submit" value="Add link">
   </form>
