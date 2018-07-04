@@ -1,7 +1,9 @@
 require 'pg'
 # lets you use sql in ruby code
 require 'uri'
+# url validator module
 require 'sinatra/flash'
+# error
 
 
 class Bookmark

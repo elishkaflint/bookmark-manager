@@ -1,4 +1,35 @@
 body {
-  font-family: sans-serif;
-  text-align: center;
+  color: blue;
+  line-height: 200%;
+  font-family: helvetica, arial, sans-serif;
 }
+
+ul li {
+  font-weight: bold;
+  border-width: 0.1px;
+  border-style: solid;
+  border-color: #565656;
+  padding: 0.8em 1em;
+  margin: 1em 0em;
+  margin-right: 2.5em;
+  list-style-type: none;
+  background-color: F4F2F2;
+}
+
+input[type=submit] {
+  font-weight: bold;
+  font-size: 100%;
+  background-color: 3FA803;
+  border-color: #565656;
+  color: #F4F2F2;
+  padding: 0.8em;
+  margin: 1em 2.5em;
+  margin-bottom: 0em;
+}
+
+/* Color Scheme
+#121CEB - Blue
+#FFFFFF - White
+#565656 - Dark Grey
+#F4F2F2 - Light Grey
+#3FA803 - Green */

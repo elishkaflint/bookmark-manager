@@ -1,13 +1,20 @@
+<link rel="stylesheet" href="/style.css"/>
+
+
+
+
 <body>
+
+  <form action="/bookmarks/new" method='get'>
+    <input type="submit" value="Add Bookmark">
+  </form>
+
+  <h1><%=flash[:notice]%></h1>
+
   <ul>
     <% @bookmarks.each do |link| %>
     <li> <%= link %></li>
     <% end %>
   </ul>
 
-  <h1><%=flash[:notice]%></h1>
-
-  <form action="/bookmarks/new" method='get'>
-    <input type="submit" value="Add link">
-  </form>
 </body>
