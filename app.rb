@@ -3,9 +3,25 @@ require_relative './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
 
+  configure do
+    # allows sinatra to find my CSS stylesheet
+    set :public_folder, File.expand_path('../public', __FILE__)
+    set :views        , File.expand_path('../views', __FILE__)
+    set :root         , File.dirname(__FILE__)
+  end
+
   get '/bookmarks' do
     @bookmarks = Bookmark.all
     erb :index
+  end
+
+  post '/bookmarks' do
+    Bookmark.create(params[:add_url])
+    redirect '/bookmarks'
+  end
+
+  get '/bookmarks/new' do
+    erb :new_bookmark
   end
 
   # check what this is

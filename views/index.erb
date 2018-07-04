@@ -1,5 +1,11 @@
-<ul>
-  <% @bookmarks.each do |link| %>
-  <li> <%= link %></li>
-  <% end %>
-</ul>
+<body>
+  <ul>
+    <% @bookmarks.each do |link| %>
+    <li> <%= link %></li>
+    <% end %>
+  </ul>
+
+  <form action="/bookmarks/new" method='get'>
+    <input type="submit" value="Add link">
+  </form>
+</body>

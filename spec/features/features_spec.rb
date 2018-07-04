@@ -1,12 +1,22 @@
-require 'pg'
+
+feature 'Adding bookmarks' do
+  scenario 'A user can add a bookmark' do
+    visit('/bookmarks')
+    click_button("Add link")
+    fill_in :add_url, with: 'http://facebook.com'
+    click_button("OK")
+    expect(page).to have_content 'http://facebook.com'
+  end
+end
+
+
 
 feature 'Viewing bookmarks' do
   scenario 'A user can see bookmarks' do
-    connection = PG.connect(dbname: 'bookmark_manager_test')
 
-    connection.exec("INSERT INTO bookmarks VALUES(1, 'http://makersacademy.com')")
-    connection.exec("INSERT INTO bookmarks VALUES(2, 'http://destroyallsoftware.com')")
-    connection.exec("INSERT INTO bookmarks VALUES(3, 'http://google.com')")
+    Bookmark.create('http://makersacademy.com')
+    Bookmark.create('http://destroyallsoftware.com')
+    Bookmark.create('http://google.com')
 
     visit('/bookmarks')
 
