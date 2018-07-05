@@ -70,3 +70,13 @@ feature 'Updating bookmarks' do
     expect(page).to have_link('Makers', :href=>"https://makers.tech/")
   end
 end
+
+feature 'Commenting on a bookmark' do
+  scenario 'A user can update a bookmark title and url' do
+    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    click_button('Add Comment')
+    fill_in :comment, with: 'A comment'
+    click_button('Add Comment')
+    expect(page).to have_content('A comment')
+  end
+end
