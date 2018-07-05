@@ -35,10 +35,6 @@ class BookmarkManager < Sinatra::Base
     redirect '/bookmarks'
   end
 
-  get '/test_flash' do
-    erb :test_flash
-  end
-
   # check what this is
   run! if app_file == $0
 
