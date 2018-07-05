@@ -8,6 +8,14 @@ require 'sinatra/flash'
 
 class Bookmark
 
+  attr_reader :title, :url, :id
+
+  def initialize(id, title, url)
+    @id = id
+    @title = title
+    @url = url
+  end
+
   def self.all
 
     if ENV['ENVIRONMENT'] == 'test'
@@ -17,12 +25,8 @@ class Bookmark
     end
 
     result = connection.exec("SELECT * FROM bookmarks")
-    # ^^ .exec allows you to run SQL on the connected database
-    # This SQL query returns an array of hashes and assigns it to result
 
-    result.map do |row|
-      row['title']
-    end
+    result.map { |bookmark| Bookmark.new(bookmark['id'],bookmark['title'],bookmark['url']) }
 
   end
 
@@ -33,7 +37,12 @@ class Bookmark
       connection = PG.connect(dbname: "bookmark_manager")
     end
     return false unless valid_url?(url)
-    connection.exec("INSERT INTO bookmarks (url,title) VALUES('#{url}','#{title}')")
+    result = connection.exec("INSERT INTO bookmarks (url,title) VALUES('#{url}','#{title}') RETURNING url, title, id")
+    Bookmark.new(result.first['id'],result.first['title'],result.first['url'])
+  end
+
+  def ==(other)
+    @id == other.id
   end
 
   private
