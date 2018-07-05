@@ -1,0 +1,10 @@
+<!-- Needs to be fixed for feature tests to work -->
+
+<form action="/bookmarks/update" method='post'>
+  Bookmark Title:<input label="Bookmark Title" type="text" name="title">
+  <br>
+  Bookmark URL:<input label="Bookmark URL" type="text" name="url">
+  <br>
+  <input type="hidden" name="id" value="<%= params[:id] %>">
+  <input type="submit" value="OK">
+</form>

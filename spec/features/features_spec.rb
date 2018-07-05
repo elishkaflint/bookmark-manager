@@ -59,29 +59,13 @@ feature 'Deleting bookmarks' do
 end
 
 feature 'Updating bookmarks' do
-  scenario 'A user can update a bookmark title' do
-    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
-    visit('/bookmarks')
-    click_button('Update Title')
-    fill_in :title, with: 'Makers'
-    click_button('OK')
-    expect(page).not_to have_content 'Makers Academy'
-    expect(page).to have_content 'Makers'
-  end
-  scenario 'A user can update a bookmark url' do
-    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
-    visit('/bookmarks')
-    click_button('Update URL')
-    fill_in :url, with: 'https://makers.tech/'
-    expect(page).not_to have_link('Makers Academy', :href=>"http://makersacademy.com")
-    expect(page).to have_link('Makers Academy', :href=>"https://makers.tech/")
-  end
   scenario 'A user can update a bookmark title and url' do
     bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
     visit('/bookmarks')
-    click_button('Update URL')
+    click_button('Update Bookmark')
     fill_in :title, with: 'Makers'
     fill_in :url, with: 'https://makers.tech/'
+    click_button('OK')
     expect(page).not_to have_link('Makers Academy', :href=>"http://makersacademy.com")
     expect(page).to have_link('Makers', :href=>"https://makers.tech/")
   end

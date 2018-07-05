@@ -51,10 +51,9 @@ describe Bookmark do
   end
 
   describe '.update' do
-    it 'updates a bookmark title' do
+    it 'updates a bookmark title and url' do
       old_bookmark = Bookmark.create('Makers Academy', 'http://www.makersacademy.com')
-      new_bookmark = Bookmark.update(bookmark.id,'Makers','http://www.makers.tech')
-      expect(Bookmark.all).not_to include old_bookmark
+      new_bookmark = Bookmark.update(old_bookmark.id,'Makers','http://www.makers.tech')
       expect(Bookmark.all).to include new_bookmark
     end
   end

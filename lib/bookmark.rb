@@ -48,6 +48,16 @@ class Bookmark
     connection.exec("DELETE FROM bookmarks WHERE id = '#{id}'")
   end
 
+  def self.update(id, title, url)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect(dbname: "bookmark_manager_test")
+    else
+      connection = PG.connect(dbname: "bookmark_manager")
+    end
+    result = connection.exec("UPDATE bookmarks SET url = '#{url}', title = '#{title}' WHERE id = '#{id}' RETURNING url, title, id")
+    Bookmark.new(result.first['id'],result.first['title'],result.first['url'])
+  end
+
   def ==(other)
     @id == other.id
   end
