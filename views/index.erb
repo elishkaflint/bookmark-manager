@@ -9,8 +9,8 @@
   <h1><%=flash[:notice]%></h1>
 
   <ul>
-    <% @bookmarks.each do |link| %>
-    <li> <%= link %></li>
+    <% @bookmarks.each do |bookmark| %>
+    <li><a href="<%= bookmark.url %>"><%= bookmark.title %></a></li>
     <% end %>
   </ul>
 
