@@ -58,4 +58,21 @@ describe Bookmark do
     end
   end
 
+  describe '.view_comments' do
+    it 'displays all the comments associated with a particular bookmark id' do
+      bookmark1 = Bookmark.create('Makers Academy', 'http://www.makersacademy.com')
+      bookmark2 = Bookmark.create('Makers Academy', 'http://www.makersacademy.com')
+      comment1 = Comment.add(bookmark1.id,'Random text')
+      comment2 = Comment.add(bookmark1.id,'More random text')
+      comment3 = Comment.add(bookmark2.id,'More random text')
+      expected_comments = [
+        comment1,
+        comment2
+      ]
+      expect(Bookmark.view_comments(bookmark1.id)).to eq expected_comments
+    end
+  end
+
+
+
 end

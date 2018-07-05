@@ -51,10 +51,11 @@ end
 
 feature 'Deleting bookmarks' do
   scenario 'A user can delete a bookmark' do
-    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    bookmark1 = Bookmark.create('Makers Academy','http://makersacademy.com')
+    bookmark2 = Bookmark.create('Facebook','http://facebook.com')
     visit('/bookmarks')
-    click_button('Delete Bookmark')
-    expect(page).not_to have_content 'Facebook'
+    click_button('Delete Bookmark', match: :first)
+    expect(page).not_to have_content 'Makers Academy'
   end
 end
 
