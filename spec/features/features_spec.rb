@@ -48,3 +48,12 @@ feature 'Clicking bookmark titles and landing on bookmarked URL' do
     expect(page).to have_link('Makers Academy', :href=>"http://makersacademy.com")
   end
 end
+
+feature 'Deleting bookmarks' do
+  scenario 'A user can delete a bookmark' do
+    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    visit('/bookmarks')
+    click_button('Delete Bookmark')
+    expect(page).not_to have_content 'Facebook'
+  end
+end
