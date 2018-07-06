@@ -2,12 +2,12 @@ require 'tag'
 
   describe Tag do
 
-    describe '.all/.add' do
+    describe '.all/.create' do
 
       it 'should add a tag to a bookmark' do
         bookmark1 = Bookmark.create('Makers','http://makersacademy.com')
-        tag1 = Tag.add(bookmark1.id,'fun')
-        tag2 = Tag.add(bookmark1.id,'work')
+        tag1 = Tag.create('fun')
+        tag2 = Tag.create('work')
         expected_tags = [
           tag1,
           tag2

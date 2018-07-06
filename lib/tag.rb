@@ -15,20 +15,14 @@ class Tag
     result.map { |tag| Tag.new(tag['id'],tag['content']) }
   end
 
-  def self.add(id, tag)
-    Tag.save_to_tags(tag)
+  def self.create(tag)
+    connection = DatabaseConnection::Connection.create
+    result = connection.exec("INSERT INTO tags (content) VALUES('#{tag}') RETURNING id, content")
+    Tag.new(result.first['id'],result.first['content'])
   end
 
   def ==(other)
     @id == other.id
-  end
-
-  private
-
-  def self.save_to_tags(tag)
-    connection = DatabaseConnection::Connection.create
-    result = connection.exec("INSERT INTO tags (content) VALUES('#{tag}') RETURNING id, content")
-    Tag.new(result.first['id'],result.first['content'])
   end
 
 end

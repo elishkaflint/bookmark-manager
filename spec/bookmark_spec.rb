@@ -73,6 +73,19 @@ describe Bookmark do
     end
   end
 
-
+  describe '.view_tags' do
+    it 'shows all the tags associated with a particular bookmark id' do
+      bookmark = Bookmark.create('Makers Academy', 'http://www.makersacademy.com')
+      tag1 = Tag.create('fun')
+      tag2 = Tag.create('work')
+      bookmark_tag = BookmarkTag.add(bookmark.id,tag1.id)
+      bookmark_tag = BookmarkTag.add(bookmark.id,tag2.id)
+      expected_tags = [
+        tag1,
+        tag2,
+      ]
+      expect(Bookmark.view_tags(bookmark.id)).to eq expected_tags
+    end
+  end
 
 end

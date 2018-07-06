@@ -5,7 +5,7 @@ describe BookmarkTag do
   describe '.add/.all' do
     it 'creates a new link between bookmarks and tags' do
       bookmark = Bookmark.create('Makers','http://makersacademy.com')
-      tag = Tag.add(bookmark.id, 'fun')
+      tag = Tag.create('fun')
       bookmark_tag = BookmarkTag.add(bookmark.id, tag.id)
       expect(BookmarkTag.all).to include bookmark_tag
     end

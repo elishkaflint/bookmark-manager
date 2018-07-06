@@ -51,6 +51,19 @@ class Bookmark
     result.map { |row| Comment.new(row['id'],row['comment']) }
   end
 
+  # Not sure how to make this work!
+  def self.view_tags(bookmark_id)
+    connection = DatabaseConnection::Connection.create
+    bookmark_tags = connection.exec("SELECT * FROM bookmarks_tags WHERE bookmark_id='#{bookmark_id}'")
+    result = bookmark_tags.map { |bookmark_tag| BookmarkTag.new(bookmark_tag['id'],bookmark_tag['bookmark_id'],bookmark_tag['tag_id']) }
+    tags = result.map do |bookmark_tag|
+      connection.exec("SELECT * FROM tags WHERE id=#{bookmark_tag.tag_id}")
+    end
+    tags.map do |tag|
+      Tag.new(tag.first['id'],tag.first['content'])
+    end
+  end
+
   def ==(other)
     @id == other.id
   end
