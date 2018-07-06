@@ -15,7 +15,7 @@ class Tag
     result.map { |tag| Tag.new(tag['id'],tag['content']) }
   end
 
-  def self.add(tag)
+  def self.add(id, tag)
     Tag.save_to_tags(tag)
   end
 

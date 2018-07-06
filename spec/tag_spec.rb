@@ -6,8 +6,8 @@ require 'tag'
 
       it 'should add a tag to a bookmark' do
         bookmark1 = Bookmark.create('Makers','http://makersacademy.com')
-        tag1 = Tag.add('fun')
-        tag2 = Tag.add('work')
+        tag1 = Tag.add(bookmark1.id,'fun')
+        tag2 = Tag.add(bookmark1.id,'work')
         expected_tags = [
           tag1,
           tag2
