@@ -99,3 +99,31 @@ feature 'Commenting on a bookmark' do
     expect(page).to have_content('A comment')
   end
 end
+
+feature 'Tagging a bookmark' do
+  scenario 'A user can tag a bookmark' do
+    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    visit('/bookmarks')
+    click_button('Add Tag')
+    fill_in :comment, with: 'fun'
+    click_button('Add Tag')
+    expect(page).to have_content('fun')
+  end
+end
+
+feature 'Filtering by tag' do
+  scenario 'A user view bookmarks associated with a tag' do
+    bookmark1 = Bookmark.create('Makers','https://makers.tech/')
+    bookmark2 = Bookmark.create('Facebook','http://facebook.com')
+    bookmark3 = Bookmark.create('Boring','http://boring.com')
+    tag1 = Tag.add(bookmark1.id,'fun')
+    tag2 = Tag.add(bookmark1.id,'work')
+    tag3 = Tag.add(bookmark2.id,'fun')
+    visit('/bookmarks')
+    click_button('fun')
+    expect(page).to have_link('Makers', :href=>"https://makers.tech/")
+    expect(page).to have_link('Facebook', :href=>"http://facebook.com")
+    expect(page).to have_link('Boring', :href=>"http://boring.com")
+
+  end
+end
