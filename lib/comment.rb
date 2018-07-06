@@ -1,23 +1,15 @@
 require 'pg'
+require_relative './connection_module.rb'
 
 class Comment
+
+  include DatabaseConnection
 
   attr_reader :id, :comment
 
   def initialize(id, comment)
     @id = id
     @comment = comment
-  end
-
-  # is this method necessary? repeated in Bookmark.comments
-  def self.all(id)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
-    result = connection.exec("SELECT * FROM comments WHERE id='#{id}'")
-    result.map { |row| Comment.new(row['id'],row['comment']) }
   end
 
   def self.add(id, comment)

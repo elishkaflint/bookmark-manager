@@ -35,6 +35,17 @@ class BookmarkManager < Sinatra::Base
     redirect '/bookmarks'
   end
 
+  get '/bookmarks/comments' do
+    @comments = Bookmark.view_comments(params[:id])
+    erb :comments
+  end
+
+  post '/bookmarks/comments' do
+    Comment.add(params[:id],params[:comment])
+    @comments = Bookmark.view_comments(params[:id])
+    erb :comments
+  end
+
   # check what this is
   run! if app_file == $0
 

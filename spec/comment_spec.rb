@@ -2,7 +2,7 @@ require 'comment'
 
   describe Comment do
 
-    describe '.all/.add' do
+    describe '.add' do
       it 'shows all the comments associated with a bookmark' do
         bookmark1 = Bookmark.create('Makers','http://makersacademy.com')
         bookmark2 = Bookmark.create('Facebook','http://facebook.com')
@@ -15,7 +15,7 @@ require 'comment'
           comment2
         ]
 
-        expect(Comment.all(bookmark1.id)).to eq expected_comments
+        expect(Bookmark.view_comments(bookmark1.id)).to eq expected_comments
       end
     end
 

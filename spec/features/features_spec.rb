@@ -73,8 +73,26 @@ feature 'Updating bookmarks' do
 end
 
 feature 'Commenting on a bookmark' do
-  scenario 'A user can update a bookmark title and url' do
+  scenario 'The homepage has a comment button which shows existing comments on the bookmark\'s comment page' do
     bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    comment = Comment.add(bookmark.id,'Some text')
+    visit('/bookmarks')
+    click_button('Comments')
+    expect(page).to have_content('Some text')
+  end
+  scenario 'The comment page tells user if there are no comments' do
+    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    visit('/bookmarks')
+    click_button('Comments')
+    expect(page).to have_content('No comments to display')
+  end
+end
+
+feature 'Commenting on a bookmark' do
+  scenario 'A user can comment on a bookmark' do
+    bookmark = Bookmark.create('Makers Academy','http://makersacademy.com')
+    visit('/bookmarks')
+    click_button('Comments')
     click_button('Add Comment')
     fill_in :comment, with: 'A comment'
     click_button('Add Comment')

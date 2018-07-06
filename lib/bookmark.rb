@@ -5,9 +5,11 @@ require 'uri'
 require 'sinatra/flash'
 # error pop-up
 require_relative './comment.rb'
-
+require_relative './connection_module.rb'
 
 class Bookmark
+
+  include DatabaseConnection
 
   attr_reader :title, :url, :id
 
@@ -18,7 +20,6 @@ class Bookmark
   end
 
   def self.all
-
     if ENV['ENVIRONMENT'] == 'test'
       connection = PG.connect(dbname: "bookmark_manager_test")
     else
