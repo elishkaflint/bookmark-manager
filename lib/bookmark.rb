@@ -20,52 +20,31 @@ class Bookmark
   end
 
   def self.all
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connect_to_database
     result = connection.exec("SELECT * FROM bookmarks")
     result.map { |bookmark| Bookmark.new(bookmark['id'],bookmark['title'],bookmark['url']) }
-
   end
 
   def self.create(title, url)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connection = DatabaseConnection::Connection.create
     return false unless valid_url?(url)
     result = connection.exec("INSERT INTO bookmarks (url,title) VALUES('#{url}','#{title}') RETURNING url, title, id")
     Bookmark.new(result.first['id'],result.first['title'],result.first['url'])
   end
 
   def self.delete(id)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connection = DatabaseConnection::Connection.create
     connection.exec("DELETE FROM bookmarks WHERE id = '#{id}'")
   end
 
   def self.update(id, title, url)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connection = DatabaseConnection::Connection.create
     result = connection.exec("UPDATE bookmarks SET url = '#{url}', title = '#{title}' WHERE id = '#{id}' RETURNING url, title, id")
     Bookmark.new(result.first['id'],result.first['title'],result.first['url'])
   end
 
   def self.view_comments(id)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connection = DatabaseConnection::Connection.create
     result = connection.exec("SELECT * FROM comments WHERE id='#{id}'")
     result.map { |row| Comment.new(row['id'],row['comment']) }
   end
@@ -75,6 +54,10 @@ class Bookmark
   end
 
   private
+
+  def connect_to_database
+    connection = DatabaseConnection::Connection.create
+  end
 
   def self.valid_url?(url)
     url =~ /\A#{URI::regexp(['http', 'https'])}\z/

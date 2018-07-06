@@ -13,11 +13,7 @@ class Comment
   end
 
   def self.add(id, comment)
-    if ENV['ENVIRONMENT'] == 'test'
-      connection = PG.connect(dbname: "bookmark_manager_test")
-    else
-      connection = PG.connect(dbname: "bookmark_manager")
-    end
+    connection = DatabaseConnection::Connection.create
     result = connection.exec("INSERT INTO comments (id, comment) VALUES('#{id}','#{comment}') RETURNING id, comment")
     Comment.new(result.first['id'],result.first['comment'])
   end
