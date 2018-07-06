@@ -20,7 +20,7 @@ class Bookmark
   end
 
   def self.all
-    connect_to_database
+    connection = DatabaseConnection::Connection.create
     result = connection.exec("SELECT * FROM bookmarks")
     result.map { |bookmark| Bookmark.new(bookmark['id'],bookmark['title'],bookmark['url']) }
   end
@@ -54,10 +54,6 @@ class Bookmark
   end
 
   private
-
-  def connect_to_database
-    connection = DatabaseConnection::Connection.create
-  end
 
   def self.valid_url?(url)
     url =~ /\A#{URI::regexp(['http', 'https'])}\z/
