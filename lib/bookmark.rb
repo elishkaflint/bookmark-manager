@@ -51,7 +51,6 @@ class Bookmark
     result.map { |row| Comment.new(row['id'],row['comment']) }
   end
 
-  # Not sure how to make this work!
   def self.view_tags(bookmark_id)
     connection = DatabaseConnection::Connection.create
     bookmark_tags = connection.exec("SELECT * FROM bookmarks_tags WHERE bookmark_id='#{bookmark_id}'")
